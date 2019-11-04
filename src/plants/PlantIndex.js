@@ -8,6 +8,7 @@ import PlantCreate from './PlantCreate';
 import PlantTable from './PlantTable';
 import PlantEdit from './PlantEdit';
 import { grey, red } from '@material-ui/core/colors';
+import APIURL from '../helpers/enviornment';
 
 
 const useStyles = makeStyles({
@@ -48,7 +49,7 @@ const updateOn = () => {
 
      const fetchPlants = () => {
         
-         fetch('http://localhost:3000/plant/myplant/', {
+         fetch(`${APIURL}/plant/myplant/`, {
              method: 'GET',
              headers: new Headers ({
                  'Content-Type' : 'application/json',

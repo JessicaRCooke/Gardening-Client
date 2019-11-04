@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody} from 'reactstrap';
+import APIURL from '../helpers/enviornment';
 
 const PlantCreate = (props) => {
     const [plantname, setPlantName] = useState('');
@@ -13,7 +14,7 @@ const PlantCreate = (props) => {
 
 const handleSubmit = (e) => {
     //e.preventDefault();
-    fetch('http://localhost:3000/plant/myplant', {
+    fetch(`${APIURL}/plant/myplant`, {
         method: "POST",
         body: JSON.stringify({plant: {plantname: plantname, dateplanted: dateplanted, where: where, sun: sun, alive: alive, soil: soil, notes: notes}}),
         headers: new Headers({

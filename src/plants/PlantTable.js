@@ -12,6 +12,7 @@ import { platform } from 'os';
 import { CardContent } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import APIURL from '../helpers/enviornment';
 
 
 
@@ -43,7 +44,7 @@ const useStyles = makeStyles({
 const PlantTable = (props) => {
    const classes = useStyles();
     const deletePlant = (plant) => {
-        fetch(`http://localhost:3000/plant/${plant.id}`, {
+        fetch(`${APIURL}/plant/${plant.id}`, {
             method: "DELETE",
             headers: new Headers({
                 'Content-Type': 'application/json',

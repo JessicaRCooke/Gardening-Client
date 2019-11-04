@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Input} from 'reactstrap';
+import APIURL from '../helpers/enviornment';
 
 const PlantEdit = (props) => {
     const [editPlantName, setEditPlantName] = useState(props.plantToUpdate.plantname);
@@ -12,7 +13,7 @@ const PlantEdit = (props) => {
 
 const plantUpdate = (event, plant) => {
     event.preventDefault();
-    fetch(`http://localhost:3000/plant/${props.plantToUpdate.id}`, {
+    fetch(`${APIURL}/plant/${props.plantToUpdate.id}`, {
         method: 'PUT',
         body: JSON.stringify({plant: {plantname: editPlantName, dateplanted: editDatePlanted, where: editWhere, sun: editSun, alive: editAlive, soil: editSoil, notes: editNotes}}),
         header: new Headers({
