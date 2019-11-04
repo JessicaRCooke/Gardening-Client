@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import {Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody} from 'reactstrap';
 
 const PlantCreate = (props) => {
     const [plantname, setPlantName] = useState('');
@@ -9,9 +9,10 @@ const PlantCreate = (props) => {
     const [alive, setAlive] = useState('');
     const [soil, setSoil] = useState('');
     const [notes, setNotes] = useState('');
+    
 
 const handleSubmit = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     fetch('http://localhost:3000/plant/myplant', {
         method: "POST",
         body: JSON.stringify({plant: {plantname: plantname, dateplanted: dateplanted, where: where, sun: sun, alive: alive, soil: soil, notes: notes}}),
@@ -29,12 +30,15 @@ const handleSubmit = (e) => {
         setAlive('');
         setSoil('');
         setNotes('');
-    })
+    }).then(props.fetchPlants())
+    props.createOn();
 }
+    
 
     return(
-        <>
-        <h3>Add a New Plant</h3>
+        <Modal isOpen={true}>
+        <ModalHeader charCode="x">Add a New Plant</ModalHeader>
+        <ModalBody>
         <Form onSubmit = {handleSubmit}>
             <FormGroup>
                 <Label htmlFor="plantname">Plant Name</Label>
@@ -50,7 +54,8 @@ const handleSubmit = (e) => {
             </FormGroup>
             <FormGroup>
                 <Label htmlFor='sun'>Sun Exposure </Label>
-                <Input type="select" name='sun' value={sun} onChange={(e) => setSun(e.target.value)}>
+                <Input required type="select" name='sun' value={sun} onChange={(e) => setSun(e.target.value)}>
+                    <option/>
                     <option value="Full Sun">Full Sun</option>
                     <option value="Part Sun">Part Sun</option>
                     <option value="Shade">Shade</option>
@@ -58,14 +63,16 @@ const handleSubmit = (e) => {
             </FormGroup>
             <FormGroup>
                 <Label htmlFor='alive'>Is it alive?</Label>
-                <Input type='select' name="alive" value={alive} onChange ={(e) => setAlive(e.target.value)}>
+                <Input required type='select' name="alive" value={alive} onChange ={(e) => setAlive(e.target.value)}>
+                    <option/>
                     <option value='yes'>Yes</option>
                     <option value='no'>No</option>
                 </Input>
             </FormGroup>
             <FormGroup>
                 <Label htmlFor='soil'>Soil Type</Label>
-                <Input type='select' name='soil' value={soil} onChange={(e) => setSoil(e.target.value)}>
+                <Input required type='select' name='soil' value={soil} onChange={(e) => setSoil(e.target.value)}>
+                    <option/>
                     <option value="Clay">Clay</option>
                     <option value="Silt">Silt</option>
                     <option value="Sand">Sand</option>
@@ -76,9 +83,12 @@ const handleSubmit = (e) => {
                 <Input name='notes' value={notes} onChange={(e) => setNotes(e.target.value)}/>
             </FormGroup>
             <Button type='submit'>Submit</Button>
-        </Form>
            
-        </>
+            
+        </Form>
+        </ModalBody>
+           
+        </Modal>
     )
 }
 

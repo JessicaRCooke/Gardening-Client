@@ -21,7 +21,8 @@ const plantUpdate = (event, plant) => {
         })
     }) .then((res) => {
         props.fetchPlants();
-        props.updateOff();
+        props.updateOn();
+        console.log(res);
     })
 }
     return(
@@ -57,7 +58,7 @@ const plantUpdate = (event, plant) => {
                         </Input>
                     </FormGroup>
                     <FormGroup>
-                    <Label htmlFor='soil'>Edit Soil</Label>/>
+                    <Label htmlFor='soil'>Edit Soil</Label>
                     <Input type='select' name='Soil' value={editSoil} onChange={(e) => setEditSoil(e.target.value)}>
                     <option value="Clay">Clay</option>
                     <option value="Silt">Silt</option>

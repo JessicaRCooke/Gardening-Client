@@ -19,7 +19,7 @@ const Sitebar = (props) => {
     }
     return(
         <Navbar color="faded" light expand="md">
-            <NavbarBrand href="/">Gardening App</NavbarBrand>
+            <NavbarBrand href="/">Flower Pot</NavbarBrand>
             <NavbarToggler onClick={toggle}/>
             <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -30,7 +30,6 @@ const Sitebar = (props) => {
             
             </Collapse>
         </Navbar>
-    )
-}
+)}
 
 export default Sitebar;

@@ -4,6 +4,13 @@ import './App.css';
 import Sitebar from './home/Navbar'
 import Auth from './auth/Auth'
 import PlantIndex from './plants/PlantIndex';
+import { makeStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
+
+const Background = styled.div`
+  background: green
+  height: 100vh,
+  `;
 
 function App() {
 const [sessionToken, setSessionToken] = useState('');
@@ -28,10 +35,12 @@ const protectedViews = () => {
   return (sessionToken === localStorage.getItem('token') ? <PlantIndex token={sessionToken}/> : <Auth updateToken={updateToken}/>)
 }
   return (
+    <Background>
     <div className="App">
     <Sitebar clickLogout={clearToken} />
     {protectedViews()}
     </div>
+    </Background>
   );
 }
 
