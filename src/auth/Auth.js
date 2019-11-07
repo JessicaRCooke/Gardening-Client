@@ -60,6 +60,9 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         
+    },
+    contain: {
+        contain: 'content',
     }
    
 })
@@ -79,7 +82,7 @@ const loginOn = () => {
 }
 
     return(
-        <div>
+        <div className={classes.contain}>
              <Heading>Flower Pot</Heading>
       
      
