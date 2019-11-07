@@ -1,8 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody} from 'reactstrap';
+import ClearIcon from '@material-ui/icons/Clear';
 import APIURL from '../helpers/enviornment';
+import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core';
+
 
 const PlantCreate = (props) => {
+    console.log(props)
     const [plantname, setPlantName] = useState('');
     const [dateplanted, setDatePlanted] = useState('');
     const [where, setWhere] = useState('');
@@ -10,10 +15,26 @@ const PlantCreate = (props) => {
     const [alive, setAlive] = useState('');
     const [soil, setSoil] = useState('');
     const [notes, setNotes] = useState('');
+    const [modal, setModal] = useState(true);
+
+    const toggle = () => setModal(!modal);
+
+    const useStyles = makeStyles ({
+        modal: {
+            background: '#b6cdf2',
+            fontFamily: 'Cormorant Garamond',
+        }, 
+        button: {
+            fontFamily: 'Cormorant Garamond',
+        },
+       
+    });
+    const classes = useStyles()
+
     
 
 const handleSubmit = (e) => {
-    //e.preventDefault();
+    e.preventDefault();
     fetch(`${APIURL}/plant/myplant`, {
         method: "POST",
         body: JSON.stringify({plant: {plantname: plantname, dateplanted: dateplanted, where: where, sun: sun, alive: alive, soil: soil, notes: notes}}),
@@ -31,26 +52,29 @@ const handleSubmit = (e) => {
         setAlive('');
         setSoil('');
         setNotes('');
-    }).then(props.fetchPlants())
-    props.createOn();
+    }).then((res) => {
+        props.fetchPlants();
+        
+        console.log(res);
+    })
 }
-    
+
 
     return(
-        <Modal isOpen={true}>
-        <ModalHeader charCode="x">Add a New Plant</ModalHeader>
-        <ModalBody>
-        <Form onSubmit = {handleSubmit}>
+        <Modal isOpen={modal} className={classes.modal}>
+        <ModalHeader className={classes.modal} >Add a New Plant <IconButton><ClearIcon onClick={toggle}/></IconButton></ModalHeader>
+        <ModalBody className={classes.modal}>
+        <Form onSubmit = {handleSubmit} >
             <FormGroup>
                 <Label htmlFor="plantname">Plant Name</Label>
                 <Input name='plantname' value={plantname} onChange={(e) => setPlantName(e.target.value)}/>
             </FormGroup>
             <FormGroup>
-                <Label htmlFor='dateplanted'>Date Planted </Label>
+                <Label htmlFor='dateplanted'>Plant Date </Label>
                 <Input name='dateplanted' value={dateplanted} onChange={(e) => setDatePlanted(e.target.value)}/>
             </FormGroup>
             <FormGroup>
-                <Label htmlFor='where'>Where Planted </Label>
+                <Label htmlFor='where'>Location </Label>
                 <Input name='where' value={where} onChange={(e) => setWhere(e.target.value)}/>
             </FormGroup>
             <FormGroup>
@@ -63,7 +87,7 @@ const handleSubmit = (e) => {
                 </Input>
             </FormGroup>
             <FormGroup>
-                <Label htmlFor='alive'>Is it alive?</Label>
+                <Label htmlFor='alive'>Is the plant alive?</Label>
                 <Input required type='select' name="alive" value={alive} onChange ={(e) => setAlive(e.target.value)}>
                     <option/>
                     <option value='yes'>Yes</option>
@@ -71,19 +95,19 @@ const handleSubmit = (e) => {
                 </Input>
             </FormGroup>
             <FormGroup>
-                <Label htmlFor='soil'>Soil Type</Label>
+                <Label htmlFor='soil'>Watering Preference</Label>
                 <Input required type='select' name='soil' value={soil} onChange={(e) => setSoil(e.target.value)}>
                     <option/>
-                    <option value="Clay">Clay</option>
-                    <option value="Silt">Silt</option>
-                    <option value="Sand">Sand</option>
+                    <option value="Dry">Dry</option>
+                    <option value="Wet">Wet</option>
+                    
                 </Input>
             </FormGroup>
             <FormGroup>
                 <Label htmlFor='notes'>Notes</Label>
                 <Input name='notes' value={notes} onChange={(e) => setNotes(e.target.value)}/>
             </FormGroup>
-            <Button type='submit'>Submit</Button>
+            <Button type='submit' onClick={toggle}>Submit</Button>
            
             
         </Form>

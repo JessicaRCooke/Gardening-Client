@@ -7,18 +7,31 @@ import { makeStyles } from '@material-ui/core/styles';
 import PlantCreate from './PlantCreate';
 import PlantTable from './PlantTable';
 import PlantEdit from './PlantEdit';
-import { grey, red } from '@material-ui/core/colors';
+import { grey, red, green } from '@material-ui/core/colors';
 import APIURL from '../helpers/enviornment';
+import Sitebar from '../home/Navbar';
+import { fontFamily } from '@material-ui/system';
 
 
 const useStyles = makeStyles({
    root: {
-       background: red,
-       height: "100vh",
+       background: '#e8ed8e',
+       height: '100%',
        margin: '20px',
+       marginBottom: '20px',
+       position: 'absoulte',
+       zIndex: '2',
+       
    },
    header: {
-       textalign: 'center'
+       textalign: 'center',
+       fontFamily: 'Cormorant Garamond',
+       color: 'grey',
+    
+   },
+   fab: {
+       fontFamily: 'Cormorant Garamond',
+       background: 'whitesmoke',
    }
 })
 
@@ -36,11 +49,14 @@ const editUpdatePlant = (plant) => {
     console.log(plant)
 }
 
-const createOn =() => {
+const createOn = () => {
     setCreateActive(!createActive);
     console.log(createActive)
 }
-
+const clearToken = () => {
+    localStorage.clear();
+    props.setSessionToken('');
+  }
 
 
 const updateOn = () => {
@@ -67,9 +83,12 @@ const updateOn = () => {
      }, [])
 
     return(
-<Paper>
+    <div>
+        <Sitebar clickLogout={clearToken}></Sitebar>
+     
+       
+<Paper className={classes.root}>
     <Container>
-
         <Row>
             <Col lg='12'>
             <h1 className={classes.header}>My Garden</h1> 
@@ -78,23 +97,22 @@ const updateOn = () => {
 
         <Row>
             <Col lg='12'>
-
-            <Fab variant="extended" onClick={createOn}>
+            <Fab variant="extended" className={classes.fab} onClick={createOn}>
                 Add a Plant
                 <AddIcon />
             </Fab>
-            {createActive ? <PlantCreate createOn={createOn}  token={props.token}/> :<> </>}
+            {createActive !== false ? <PlantCreate fetchPlants={fetchPlants} createActive={createActive} setCreateActive={setCreateActive}  token={props.token}/> :<> </>}
             </Col>
-        </Row>
-                
+        </Row>        
         <Row> 
+            <Col lg="12'">
             <PlantTable  plants={plants} editUpdatePlant={editUpdatePlant} updateOn={updateOn} fetchPlants={fetchPlants} token={props.token}/>
             {updateActive ? <PlantEdit plantToUpdate={plantToUpdate} updateOn={updateOn} token={props.token} fetchPlants={fetchPlants}/> : <></>}
-        </Row>
-            
+            </Col>
+        </Row>     
     </Container>
         </Paper>  
-      
+     </div>
     )
 }
 

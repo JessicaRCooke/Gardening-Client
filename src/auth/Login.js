@@ -1,11 +1,27 @@
 import React, {useState} from 'react';
-import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
-import APIURL from '../helpers/enviornment'
-
+import {Form, FormGroup, Label, Input, Modal, ModalBody, ModalHeader} from 'reactstrap';
+import APIURL from '../helpers/enviornment';
+import Button from '@material-ui/core/Button'
+import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from '@material-ui/icons/Clear';
+import { makeStyles } from '@material-ui/core/styles';
 const Login = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [modal, setModal] = useState(true);
 
+    const toggle = () => setModal(!modal);
+
+    const useStyles = makeStyles ({
+        modal: {
+            background: '#d3dff2',
+            fontFamily: 'Cormorant Garamond',
+        }, 
+        button: {
+            fontFamily: 'Cormorant Garamond',
+        }
+    });
+    const classes = useStyles();
     const handleSubmit =(event) => {
         event.preventDefault();
         fetch(`${APIURL}/user/signin`, {
@@ -22,20 +38,22 @@ const Login = (props) => {
     }
 
     return(
-        <div>
-        <h1>Login</h1>
-        <Form onSubmit={handleSubmit}>
+        <Modal isOpen={modal} className={classes.modal}>
+        <ModalHeader className={classes.modal} >Login<IconButton><ClearIcon onClick={toggle}/></IconButton></ModalHeader>
+        <ModalBody className={classes.modal}>
+        <Form onSubmit={handleSubmit} classname={classes.modal}>
         <FormGroup>
-        <Label htmlFor="username">Username</Label>
-        <Input onChange={(e) => setUsername(e.target.value)} name="username" value={username}/>
+            <Label htmlFor="username">Username</Label>
+            <Input onChange={(e) => setUsername(e.target.value)} name="username" value={username}/>
         </FormGroup>
         <FormGroup>
             <Label htmlFor="password">Password</Label>
             <Input onChange={(e) => setPassword(e.target.value)} name="password" value={password} />
         </FormGroup>
-        <Button type="submit">Login</Button>
+            <Button  className={classes.button} variant="outlined" type="submit" >Login</Button>
         </Form>
-        </div>
+        </ModalBody>
+        </Modal>
     )
 }
 export default Login;

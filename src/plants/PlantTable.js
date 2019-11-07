@@ -5,7 +5,7 @@ import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { red } from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
 import { mergeClasses } from '@material-ui/styles';
 import Card from '@material-ui/core/Card'
 import { platform } from 'os';
@@ -13,6 +13,7 @@ import { CardContent } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import APIURL from '../helpers/enviornment';
+import { whileStatement } from '@babel/types';
 
 
 
@@ -20,23 +21,30 @@ const useStyles = makeStyles({
 
     card: {
       minWidth: 275,
-      maxWidth: 400,
-      backgroundColor: '#4DDC82',
+      maxWidth: 275,
+      maxHeight: 500,
+      backgroundColor: '#68cc7a',
+      fontFamily: 'Cormorant Garamond',
+      border: '1px solid lightgrey',
      
     },
     bullet: {
       display: 'inline-block',
       margin: '0 2px',
       transform: 'scale(0.8)',
+      fontFamily: 'Cormorant Garamond',
     },
     title: {
       fontSize: 30,
       textTransform: 'uppercase',
+      fontFamily: 'Cormorant Garamond',
+      color: 'white',
 
       
     },
     pos: {
       marginBottom: 12,
+      fontFamily: 'Cormorant Garamond',
     },
   });
 
@@ -63,14 +71,14 @@ const PlantTable = (props) => {
                 <Card className={classes.card}>
                     <CardContent>
                         <Typography className={classes.title}  gutterBottom> {plant.plantname}
-                        <IconButton color="secondary"  size='small' aria-label="edit" onClick={() => {props.editUpdatePlant(plant); props.updateOn()}} >
+                        <IconButton color='green'  size='small' aria-label="edit" onClick={() => {props.editUpdatePlant(plant); props.updateOn()}} >
                             <EditIcon />
                             </IconButton> </Typography>
-                        <Typography className={classes.pos}> Date Planted: {plant.dateplanted}</Typography>
-                        <Typography className={classes.pos}> Where: {plant.where}</Typography>
-                        <Typography className={classes.pos}> Sun: {plant.sun}</Typography>
-                        <Typography className={classes.pos}> Alive: {plant.alive}</Typography>
-                        <Typography className={classes.pos}> Soil: {plant.soil}</Typography>
+                        <Typography className={classes.pos}> Plant Date: {plant.dateplanted}</Typography>
+                        <Typography className={classes.pos}> Location: {plant.where}</Typography>
+                        <Typography className={classes.pos}> Sun exposure: {plant.sun}</Typography>
+                        <Typography className={classes.pos}> Is the plant alive: {plant.alive}</Typography>
+                        <Typography className={classes.pos}> Watering Preference: {plant.soil}</Typography>
                         <Typography className={classes.pos}> Notes: {plant.notes}</Typography>
                         
                          <IconButton color='danger' aria-label="Delete" onClick={() => {deletePlant(plant)}}> 

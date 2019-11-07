@@ -8,8 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 
 const Background = styled.div`
-  background: green
-  height: 100vh,
+  background: #dae6e0;
+  height: 100vh;
   `;
 
 function App() {
@@ -32,15 +32,18 @@ const clearToken = () => {
 }
 
 const protectedViews = () => {
-  return (sessionToken === localStorage.getItem('token') ? <PlantIndex token={sessionToken}/> : <Auth updateToken={updateToken}/>)
+  return (sessionToken === localStorage.getItem('token') ? <PlantIndex setSessionToken={setSessionToken} token={sessionToken}/> : <Auth updateToken={updateToken}/>)
 }
   return (
+    
     <Background>
     <div className="App">
-    <Sitebar clickLogout={clearToken} />
     {protectedViews()}
     </div>
+  
     </Background>
+    
+    
   );
 }
 
